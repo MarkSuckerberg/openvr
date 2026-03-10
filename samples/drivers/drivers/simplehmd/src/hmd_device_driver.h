@@ -4,7 +4,7 @@
 #include <array>
 #include <string>
 
-#include "openvr_driver.h"
+#include "openvr/openvr_driver.h"
 #include <atomic>
 #include <thread>
 
@@ -31,17 +31,17 @@ struct MyHMDDisplayDriverConfiguration
 class MyHMDDisplayComponent : public vr::IVRDisplayComponent
 {
 public:
-	explicit MyHMDDisplayComponent( const MyHMDDisplayDriverConfiguration &config );
+	explicit MyHMDDisplayComponent(const MyHMDDisplayDriverConfiguration &config);
 
 	// ----- Functions to override vr::IVRDisplayComponent -----
 	bool IsDisplayOnDesktop() override;
 	bool IsDisplayRealDisplay() override;
-	void GetRecommendedRenderTargetSize( uint32_t *pnWidth, uint32_t *pnHeight ) override;
-	void GetEyeOutputViewport( vr::EVREye eEye, uint32_t *pnX, uint32_t *pnY, uint32_t *pnWidth, uint32_t *pnHeight ) override;
-	void GetProjectionRaw( vr::EVREye eEye, float *pfLeft, float *pfRight, float *pfTop, float *pfBottom ) override;
-	vr::DistortionCoordinates_t ComputeDistortion( vr::EVREye eEye, float fU, float fV ) override;
-	void GetWindowBounds( int32_t *pnX, int32_t *pnY, uint32_t *pnWidth, uint32_t *pnHeight ) override;
-	bool ComputeInverseDistortion( vr::HmdVector2_t* pResult, vr::EVREye eEye, uint32_t unChannel, float fU, float fV) override;
+	void GetRecommendedRenderTargetSize(uint32_t *pnWidth, uint32_t *pnHeight) override;
+	void GetEyeOutputViewport(vr::EVREye eEye, uint32_t *pnX, uint32_t *pnY, uint32_t *pnWidth, uint32_t *pnHeight) override;
+	void GetProjectionRaw(vr::EVREye eEye, float *pfLeft, float *pfRight, float *pfTop, float *pfBottom) override;
+	vr::DistortionCoordinates_t ComputeDistortion(vr::EVREye eEye, float fU, float fV) override;
+	void GetWindowBounds(int32_t *pnX, int32_t *pnY, uint32_t *pnWidth, uint32_t *pnHeight) override;
+	bool ComputeInverseDistortion(vr::HmdVector2_t *pResult, vr::EVREye eEye, uint32_t unChannel, float fU, float fV) override;
 
 private:
 	MyHMDDisplayDriverConfiguration config_;
@@ -57,29 +57,29 @@ class MyHMDControllerDeviceDriver : public vr::ITrackedDeviceServerDriver
 {
 public:
 	MyHMDControllerDeviceDriver();
-	vr::EVRInitError Activate( uint32_t unObjectId ) override;
+	vr::EVRInitError Activate(uint32_t unObjectId) override;
 	void EnterStandby() override;
-	void *GetComponent( const char *pchComponentNameAndVersion ) override;
-	void DebugRequest( const char *pchRequest, char *pchResponseBuffer, uint32_t unResponseBufferSize ) override;
+	void *GetComponent(const char *pchComponentNameAndVersion) override;
+	void DebugRequest(const char *pchRequest, char *pchResponseBuffer, uint32_t unResponseBufferSize) override;
 	vr::DriverPose_t GetPose() override;
 	void Deactivate() override;
 
 	// ----- Functions we declare ourselves below -----
 	const std::string &MyGetSerialNumber();
 	void MyRunFrame();
-	void MyProcessEvent( const vr::VREvent_t &vrevent );
+	void MyProcessEvent(const vr::VREvent_t &vrevent);
 	void MyPoseUpdateThread();
 
 private:
-	std::unique_ptr< MyHMDDisplayComponent > my_display_component_;
+	std::unique_ptr<MyHMDDisplayComponent> my_display_component_;
 
 	std::string my_hmd_model_number_;
 	std::string my_hmd_serial_number_;
 
-	std::array< vr::VRInputComponentHandle_t, MyComponent_MAX > my_input_handles_{};
-	std::atomic< int > frame_number_;
-	std::atomic< bool > is_active_;
-	std::atomic< uint32_t > device_index_;
+	std::array<vr::VRInputComponentHandle_t, MyComponent_MAX> my_input_handles_{};
+	std::atomic<int> frame_number_;
+	std::atomic<bool> is_active_;
+	std::atomic<uint32_t> device_index_;
 
 	std::thread my_pose_update_thread_;
 };

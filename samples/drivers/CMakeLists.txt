@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.7.1)
+cmake_minimum_required(VERSION 4.2)
 
 project(openvr_samples)
 
@@ -41,14 +41,14 @@ endif()
 
 find_library(OPENVR_LIBRARIES
   NAMES
-    openvr_api
+  openvr_api
   PATHS
-    ${OPENVR_LIB_DIR}/bin
-    ${OPENVR_LIB_DIR}/lib
+  ${OPENVR_LIB_DIR}/bin
+  ${OPENVR_LIB_DIR}/lib
   PATH_SUFFIXES
-    osx${PLATFORM}
-    linux${PLATFORM}
-    win${PLATFORM}
+  osx${PLATFORM}
+  linux${PLATFORM}
+  win${PLATFORM}
   NO_DEFAULT_PATH
   NO_CMAKE_FIND_ROOT_PATH
 )
